@@ -5,7 +5,7 @@ const ctx = canvas.getContext('2d');
 //-------make a circle----------------------------------------
 //------------------------------------------------------------
 ctx.beginPath();
-ctx.arc(250,250,20,0,2*Math.PI, true);
+ctx.arc(400,400,20,0,2*Math.PI, true);
 ctx.fillStyle = 'black';
 ctx.fill();
 ctx.stroke();
@@ -28,36 +28,29 @@ function getMousePos(canvas, e) {
 //------------------------------------------------------------
 //-------follow the cursor------------------------------------
 //------------------------------------------------------------
-let ballX = 250;
-let ballY = 250;
-let mousePos;
-let mouseX;
-let mouseY;
+let ballX = 400;
+let ballY = 400;
 
-canvas.addEventListener('mousemove', function(e) {
-  mousePos = getMousePos(canvas, e);
-  mouseX = mousePos.x;
-  mouseY = mousePos.y;
+canvas.addEventListener('mousemove', e => {
+  let mousePos = getMousePos(canvas, e);
+  let mouseX = mousePos.x;
+  let mouseY = mousePos.y;
 
-  ctx.fillStyle = 'white';
-  ctx.fillRect(0,0,500,500);
-
+  ctx.clearRect(0,0,800,800);
   ctx.beginPath();
   ctx.arc(ballX,ballY,20,0,2*Math.PI, true);
   ctx.fillStyle = 'black';
   ctx.fill();
   ctx.stroke();
 
-  if (mouseX >= ballX) {
-    ballX += 10;
+  if (mouseX !== ballX) {
+    (mouseX>ballX) ? ballX+= 15 : ballX -= 15;
   }
-  if (mouseY >= ballY) {
-    ballY += 10;
+  if (mouseY !== ballY) {
+    (mouseY>ballY) ? ballY+= 15 : ballY -= 15;
   }
-  if (mouseX <= ballX) {
-    ballX -= 10;
-  }
-  if (mouseY <= ballY) {
-    ballY -= 10;
+
+  if (Math.abs(mouseX - ballX) <= 10 && Math.abs(mouseY - ballY) <= 10) {
+    alert('loser!');
   }
 });
